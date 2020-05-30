@@ -1,0 +1,93 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: dale
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: prod
+  region: ${opt:RegionId}
+  stackName: dale-${opt:StackName}
+  apiName: dale-${opt:StackName}
+  deploymentBucket:
+    name: dale-${opt:RegionId}
+  deploymentPrefix:
+    ${opt:StackName}
+  memorySize: 128
+  environment:
+    SECRETS_SERVICE_KEY: ${opt:SecretsServiceKey}
+    # PORTAL_SECRET_KEY: ${opt:PortalSecretKey}
+    PLATFORM_SECRET_KEY: ${opt:PlatformSecretKey}
+    DB_HOST: ${opt:DbHost}
+    DB_SCHEMA: ${opt:DbSchema}
+    PLATFORM_DB_SCHEMA: ${opt:PlatformDbSchema}
+    JWT_SECRET: ${opt:JwtSecret}
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "apigateway:GET"
+      Resource:
+        - "arn:aws:apigateway:${self:provider.region}::/restapis*"
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-aws-documentation
+  - serverless-domain-manager
+
+functions:
+
+  createFlagForCourse:
+    handler: src/portal.createCourseFlag
+    name: ${self:provider.stackName}-createFlagForCourse
+    description: Create a flag for a course, based on courseId
+    role: ${opt:BasicLambdaRole}
+    events:
+      - http:
+          path: /courses/{courseId}/flags
+          method: post
+          cors: true
+          authorizer:
+            name: customAuthorizer
+            resultTtlInSeconds: 0
+
+resources:
+  Resources:
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Methods: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+
+custom:
+  customDomain:
+    domainName: portalapi-${opt:StackName}.elumenapp.com
+    basePath: ''
+    stage: ${self:provider.stage}
+    certificateName: "*.elumenapp.com"
+    createRoute53Record: true
+    endpointType: 'regional'

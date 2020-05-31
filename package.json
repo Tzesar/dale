@@ -2,24 +2,17 @@
   "name": "dale",
   "version": "1.0.0",
   "description": "Serverless webpack example using Typescript",
-  "main": "handler.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "aws-lambda": "^1.0.6"
   },
   "devDependencies": {
-    "source-map-support": "^0.5.10",
-    "@types/aws-lambda": "^8.10.17",
-    "@types/node": "^10.12.18",
-    "fork-ts-checker-webpack-plugin": "^3.0.1",
-    "serverless-offline": "^6.3.0",
-    "serverless-webpack": "^5.2.0",
-    "ts-loader": "^5.3.3",
-    "typescript": "^3.2.4",
-    "webpack": "^4.29.0",
-    "webpack-node-externals": "^1.7.2",
-    "serverless-plugin-typescript": "1.1.7"
+    "@types/aws-lambda": "^8.10.51",
+    "serverless": "^1.71.3",
+    "serverless-plugin-typescript": "^1.1.9",
+    "typescript": "^3.9.3"
   },
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT"

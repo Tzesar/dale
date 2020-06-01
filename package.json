@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "Serverless webpack example using Typescript",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "invoke": "serverless invoke local --function hello --log"
   },
   "dependencies": {
-    "aws-lambda": "^1.0.6"
+    "aws-lambda": "^1.0.6",
+    "mysql": "^2.18.1",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.51",
     "serverless": "^1.71.3",
+    "serverless-offline": "^6.3.0",
     "serverless-plugin-typescript": "^1.1.9",
     "typescript": "^3.9.3"
   },

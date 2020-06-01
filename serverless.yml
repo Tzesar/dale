@@ -6,6 +6,7 @@ service:
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-offline
 
 provider:
   name: aws

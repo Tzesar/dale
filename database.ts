@@ -1,5 +1,4 @@
 import { Connection, ConnectionManager, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm'
-import 'envkey'
 
 /**
  * Database manager class

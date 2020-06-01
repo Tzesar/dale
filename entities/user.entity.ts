@@ -6,7 +6,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column("varchar", { length: 50 })
     name: string;
 
     constructor(id: number, name: string) {

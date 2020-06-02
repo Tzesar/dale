@@ -1,4 +1,5 @@
 import { Connection, ConnectionManager, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 /**
  * Database manager class
@@ -22,20 +23,19 @@ export class Database {
             if (!connection.isConnected) {
                 connection = await connection.connect()
             }
-        }
-        else {
+        } else {
             console.info(`Database.getConnection()-creating connection ...`)
 
             const connectionOptions: ConnectionOptions = {
                 name: `default`,
                 type: `mysql`,
                 port: 3306,
-                synchronize: true,
                 logging: true,
                 host: 'localhost',
                 username: 'elumen',
                 database: 'dale',
                 password: 'elumen',
+                namingStrategy: new SnakeNamingStrategy(),
                 entities: [
                     __dirname + "/entities/*.*"
                 ]

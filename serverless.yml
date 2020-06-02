@@ -19,4 +19,4 @@ functions:
     events:
       - http:
           method: get
-          path: hello
+          path: /hello

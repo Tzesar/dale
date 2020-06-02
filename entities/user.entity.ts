@@ -6,11 +6,15 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column("varchar", { length: 50 })
+    @Column()
     name: string;
 
-    constructor(id: number, name: string) {
+    @Column()
+    lastName: string;
+
+    constructor(id: number, name: string, lastName: string) {
         this.id = id;
         this.name = name;
+        this.lastName = lastName;
     }
 }

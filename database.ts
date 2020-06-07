@@ -26,15 +26,27 @@ export class Database {
         } else {
             console.info(`Database.getConnection()-creating connection ...`)
 
+            // const connectionOptions: ConnectionOptions = {
+            //     name: `default`,
+            //     type: `mysql`,
+            //     port: 3306,
+            //     logging: true,
+            //     host: 'localhost',
+            //     username: 'elumen',
+            //     database: 'dale',
+            //     password: 'elumen',
+            //     namingStrategy: new SnakeNamingStrategy(),
+            //     entities: [
+            //         __dirname + "/entities/*.*"
+            //     ]
+            // }
+
             const connectionOptions: ConnectionOptions = {
-                name: `default`,
-                type: `mysql`,
-                port: 3306,
-                logging: true,
-                host: 'localhost',
-                username: 'elumen',
+                type: 'aurora-data-api',
                 database: 'dale',
-                password: 'elumen',
+                secretArn: 'arn:aws:secretsmanager:us-east-1:292052096336:secret:rds-db-credentials/cluster-Y7OFC5JYNXVPIKRRQD53NLVGVY/admin-qpdIjX',
+                resourceArn: 'arn:aws:rds:us-east-1:292052096336:cluster:date-test-database',
+                region: 'us-east-1',
                 namingStrategy: new SnakeNamingStrategy(),
                 entities: [
                     __dirname + "/entities/*.*"

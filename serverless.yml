@@ -16,6 +16,7 @@ provider:
 functions:
   hello:
     handler: handler.hello
+    role: arn:aws:iam::292052096336:role/dale-lambda-all-mighty
     events:
       - http:
           method: get

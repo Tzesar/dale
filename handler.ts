@@ -1,22 +1,27 @@
-import { APIGatewayProxyHandler, APIGatewayProxyEvent, Context } from 'aws-lambda';
-import { Database } from './database';
+import { APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import { Connection } from 'typeorm';
+import { Database } from './database';
 import { User } from './entities/user.entity';
 
 const database: Database = new Database();
 
 export const hello: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent, _context: Context) => {
-  _context.callbackWaitsForEmptyEventLoop = false;
+    _context.callbackWaitsForEmptyEventLoop = false;
 
-  let dbConn: Connection = await database.getConnection();
+    const dbConn: Connection = await database.getConnection();
 
-  const users: User[] = await dbConn.getRepository(User).find();
+    const users: User[] = await dbConn.getRepository(User).find();
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-      users: users,
-    }, null, 2),
-  };
-}
+    const IDENTATION_SPACES_RETURNED_JSON: number = 2;
+    return {
+        body: JSON.stringify(
+            {
+                message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
+                users,
+            },
+            undefined,
+            IDENTATION_SPACES_RETURNED_JSON
+        ),
+        statusCode: 200,
+    };
+};

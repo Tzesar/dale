@@ -1,27 +1,27 @@
-import { Connection, ConnectionManager, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm'
+import { Connection, ConnectionManager, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 /**
  * Database manager class
  */
 export class Database {
-    private connectionManager: ConnectionManager
+    private connectionManager: ConnectionManager;
 
-    constructor() {
-        this.connectionManager = getConnectionManager()
+    public constructor() {
+        this.connectionManager = getConnectionManager();
     }
 
     public async getConnection(): Promise<Connection> {
-        const CONNECTION_NAME = `default`
+        const CONNECTION_NAME: string = `default`;
 
-        let connection: Connection
+        let connection: Connection;
 
         if (this.connectionManager.has(CONNECTION_NAME)) {
             console.info(`[Database]: using existing connection.`);
             connection = await this.connectionManager.get(CONNECTION_NAME);
 
             if (!connection.isConnected) {
-                connection = await connection.connect()
+                connection = await connection.connect();
             }
         } else {
             console.info(`[Database]: creating new connection.`);
@@ -71,9 +71,9 @@ export class Database {
             //     })
             // }
 
-            connection = await createConnection(connectionOptions)
+            connection = await createConnection(connectionOptions);
         }
 
-        return connection
+        return connection;
     }
 }

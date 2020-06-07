@@ -12,6 +12,10 @@ provider:
   name: aws
   runtime: nodejs10.x
   profile: personal
+  environment:
+    # This CLI parameter should only contain one of two values "LOCAL" or "AWS".
+    # If no value is provided "LOCAL" will be used
+    DB_CONFIG: ${opt:dbConfig}
 
 functions:
   hello:

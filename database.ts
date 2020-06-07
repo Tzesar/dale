@@ -17,40 +17,51 @@ export class Database {
         let connection: Connection
 
         if (this.connectionManager.has(CONNECTION_NAME)) {
-            console.info(`Database.getConnection()-using existing connection ...`)
-            connection = await this.connectionManager.get(CONNECTION_NAME)
+            console.info(`[Database]: using existing connection.`);
+            connection = await this.connectionManager.get(CONNECTION_NAME);
 
             if (!connection.isConnected) {
                 connection = await connection.connect()
             }
         } else {
-            console.info(`Database.getConnection()-creating connection ...`)
+            console.info(`[Database]: creating new connection.`);
 
-            // const connectionOptions: ConnectionOptions = {
-            //     name: `default`,
-            //     type: `mysql`,
-            //     port: 3306,
-            //     logging: true,
-            //     host: 'localhost',
-            //     username: 'elumen',
-            //     database: 'dale',
-            //     password: 'elumen',
-            //     namingStrategy: new SnakeNamingStrategy(),
-            //     entities: [
-            //         __dirname + "/entities/*.*"
-            //     ]
-            // }
+            let connectionOptions: ConnectionOptions;
+            if (!process.env.DB_CONFIG) {
+                throw new ReferenceError('Environment Variable DB_CONFIG is not defined.');
+            }
 
-            const connectionOptions: ConnectionOptions = {
-                type: 'aurora-data-api',
-                database: 'dale',
-                secretArn: 'arn:aws:secretsmanager:us-east-1:292052096336:secret:rds-db-credentials/cluster-Y7OFC5JYNXVPIKRRQD53NLVGVY/admin-qpdIjX',
-                resourceArn: 'arn:aws:rds:us-east-1:292052096336:cluster:date-test-database',
-                region: 'us-east-1',
-                namingStrategy: new SnakeNamingStrategy(),
-                entities: [
-                    __dirname + "/entities/*.*"
-                ]
+            if (process.env.DB_CONFIG === 'LOCAL') {
+                console.info(`[Database]: using DB config for LOCAL environment.`);
+                connectionOptions = {
+                    database: 'dale',
+                    entities: [
+                        __dirname + '/entities/*.*'
+                    ],
+                    host: 'localhost',
+                    logging: true,
+                    name: `default`,
+                    namingStrategy: new SnakeNamingStrategy(),
+                    password: 'elumen',
+                    port: 3306,
+                    type: `mysql`,
+                    username: 'elumen'
+                };
+            } else if (process.env.DB_CONFIG === 'AWS') {
+                console.info(`[Database]: using DB config for AWS environment.`);
+                connectionOptions = {
+                    database: 'dale',
+                    entities: [
+                        __dirname + '/entities/*.*'
+                    ],
+                    namingStrategy: new SnakeNamingStrategy(),
+                    region: 'us-east-1',
+                    resourceArn: 'arn:aws:rds:us-east-1:292052096336:cluster:date-test-database',
+                    secretArn: 'arn:aws:secretsmanager:us-east-1:292052096336:secret:rds-db-credentials/cluster-Y7OFC5JYNXVPIKRRQD53NLVGVY/admin-qpdIjX',
+                    type: 'aurora-data-api'
+                };
+            } else {
+                throw new ReferenceError('Environment Variable DB_CONFIG doesnt contain any of the two valid options (LOCAL, AWS).');
             }
 
             // Don't need a pwd locally

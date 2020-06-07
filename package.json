@@ -5,8 +5,8 @@
   "scripts": {
     "clean": "rimraf .build .serverless .nyc_output coverage",
     "predeploy": "npm run clean",
-    "deploy": "SET SLS_DEBUG=* && serverless deploy --aws-profile personal",
-    "start": "serverless offline -s dev",
+    "deploy": "SET SLS_DEBUG=* && serverless deploy --aws-profile personal --dbConfig AWS",
+    "start": "serverless offline -s dev --dbConfig LOCAL",
     "test": "echo \"Error: no test specified\" && exit 1",
     "invoke": "serverless invoke local --function hello --log"
   },

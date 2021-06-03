@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, Context } from 'aws-lambda';
 import { Connection } from 'typeorm';
 import { Database } from './database';
-import { User } from './entities/user.entity';
+import { IncomingEvent } from './entities/user.entity';
 
 const database: Database = new Database();
 
@@ -10,7 +10,7 @@ export const hello: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent,
 
     const dbConn: Connection = await database.getConnection();
 
-    const users: User[] = await dbConn.getRepository(User).find();
+    const users: IncomingEvent[] = await dbConn.getRepository(IncomingEvent).find();
 
     const IDENTATION_SPACES_RETURNED_JSON: number = 2;
     return {

@@ -42,10 +42,10 @@ export class Database {
                     logging: true,
                     name: `default`,
                     namingStrategy: new SnakeNamingStrategy(),
-                    password: 'elumen',
+                    password: 'augusto',
                     port: 3306,
                     type: `mysql`,
-                    username: 'elumen'
+                    username: 'augusto'
                 };
             } else if (process.env.DB_CONFIG === 'AWS') {
                 console.info(`[Database]: using DB config for AWS environment.`);
@@ -56,8 +56,8 @@ export class Database {
                     ],
                     namingStrategy: new SnakeNamingStrategy(),
                     region: 'us-east-1',
-                    resourceArn: 'arn:aws:rds:us-east-1:292052096336:cluster:date-test-database',
-                    secretArn: 'arn:aws:secretsmanager:us-east-1:292052096336:secret:rds-db-credentials/cluster-Y7OFC5JYNXVPIKRRQD53NLVGVY/admin-qpdIjX',
+                    resourceArn: 'arn:aws:rds:us-east-1:292052096336:cluster:dale-test-database',
+                    secretArn: ' arn:aws:secretsmanager:us-east-1:292052096336:secret:dev/dale-AuQZ1s',
                     type: 'aurora-data-api'
                 };
             } else {

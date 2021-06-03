@@ -1,20 +1,20 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class User {
+export class IncomingEvent {
 
     @PrimaryGeneratedColumn()
     public id: number;
 
     @Column()
-    public lastName: string;
+    public rawContent: string;
 
     @Column()
-    public name: string;
+    public status: string;
 
-    public constructor(id: number, name: string, lastName: string) {
+    public constructor(id: number, rawContent: string, status: string) {
         this.id = id;
-        this.name = name;
-        this.lastName = lastName;
+        this.rawContent = rawContent;
+        this.status = status;
     }
 }

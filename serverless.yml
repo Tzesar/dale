@@ -10,7 +10,7 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs10.x
+  runtime: nodejs12.x
   profile: personal
   environment:
     # This CLI parameter should only contain one of two values "LOCAL" or "AWS".
@@ -18,10 +18,17 @@ provider:
     DB_CONFIG: ${opt:dbConfig}
 
 functions:
-  hello:
-    handler: handler.hello
+  store-incoming-event:
+    handler: api/incoming-event.store
+    role: arn:aws:iam::292052096336:role/dale-lambda-all-mighty
+    events:
+      - http:
+          method: post
+          path: /incoming-event
+  get-incoming-events:
+    handler: api/incoming-event.get
     role: arn:aws:iam::292052096336:role/dale-lambda-all-mighty
     events:
       - http:
           method: get
-          path: /hello
+          path: /incoming-event

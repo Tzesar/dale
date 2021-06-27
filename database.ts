@@ -57,7 +57,7 @@ export class Database {
                     namingStrategy: new SnakeNamingStrategy(),
                     region: 'us-east-1',
                     resourceArn: 'arn:aws:rds:us-east-1:292052096336:cluster:dale-test-database',
-                    secretArn: ' arn:aws:secretsmanager:us-east-1:292052096336:secret:dev/dale-AuQZ1s',
+                    secretArn: 'arn:aws:secretsmanager:us-east-1:292052096336:secret:rds-db-credentials/cluster-Y7OFC5JYNXVPIKRRQD53NLVGVY/admin-nZDpKo',
                     type: 'aurora-data-api'
                 };
             } else {

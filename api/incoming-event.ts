@@ -25,8 +25,8 @@ export const store: APIGatewayProxyHandler = async (
     return {
         body: JSON.stringify(
             {
-                message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
-                persistedIncomingEvent,
+                persistedEvent: persistedIncomingEvent,
+                status: 200,
             },
             undefined,
             IDENTATION_SPACES_RETURNED_JSON

@@ -1,0 +1,2 @@
+ALTER TABLE incoming_event
+    ADD COLUMN received_at DATETIME NOT NULL DEFAULT NOW();

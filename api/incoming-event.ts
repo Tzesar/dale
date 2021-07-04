@@ -44,7 +44,7 @@ export const get: APIGatewayProxyHandler = async (
 
     const incomingEvents: IncomingEvent[] = await dbConn.getRepository(IncomingEvent).find();
 
-    const IDENTATION_SPACES_RETURNED_JSON: number = 2;
+    const INDENTATION_SPACES_RETURNED_JSON: number = 2;
     return {
         body: JSON.stringify(
             {
@@ -52,7 +52,7 @@ export const get: APIGatewayProxyHandler = async (
                 message: 'Go Serverless Webpack (Typescript) v1.0! Your function executed successfully!',
             },
             undefined,
-            IDENTATION_SPACES_RETURNED_JSON
+            INDENTATION_SPACES_RETURNED_JSON
         ),
         statusCode: 200,
     };

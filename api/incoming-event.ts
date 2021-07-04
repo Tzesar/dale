@@ -1,7 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { Connection, Repository } from 'typeorm';
 import { Database } from '../database';
-import { IncomingEvent } from '../entities/user.entity';
+import { IncomingEvent } from '../entities/incoming-event.entity';
 
 const database: Database = new Database();
 

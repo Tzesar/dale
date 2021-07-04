@@ -1,23 +1,9 @@
 @startuml
 'https://plantuml.com/class-diagram
 
-abstract class AbstractList
-abstract AbstractCollection
-interface List
-interface Collection
-
-List <|-- AbstractList
-Collection <|-- AbstractCollection
-
-Collection <|- List
-AbstractCollection <|- AbstractList
-AbstractList <|-- IncomingEvent
-
-RawEvent --> RawEventStatusEnum
-
 enum RawEventStatusEnum {
-    TO_BE_CONSUMED
-    CONSUMED
+    + TO_BE_CONSUMED
+    + CONSUMED
 }
 
 class RawEvent {
@@ -34,15 +20,37 @@ class RawEvent {
 }
 
 interface AccountingEvent {
-    + constructFromRawContent(rawContent: string): AccountingEvent
+    + {static} constructFromRawContent(rawContent: string): AccountingEvent
+    + {static} doesRawContentMatchThisEventType(rawContent: String): Boolean
 }
 
 interface IncomeEvent extends AccountingEvent
 
 interface ExpenseEvent extends AccountingEvent
 
+class SalaryIncomeEvent implements IncomeEvent {
+    + {static} constructFromRawContent(rawContent: string): AccountingEvent
+    + {static} doesRawContentMatchThisEventType(rawContent: String): Boolean
+}
+
+note left of AccountingEvent
+    All concrete Event implementations must implement
+    method <i>doesRawContentMatchThisEventType</i>
+    as a way to unmistakably determine if raw content event
+    represents it.
+    In the same way, each Event implementation must implement
+    method <i></i>
+end note
+
 class AccountingEventFactory {
+    - {static} supportedEventsList: List<AccountingEvent>
+
     + buildAccountingEventFromRawContent(rawContent: string): AccountingEvent
 }
+
+RawEvent --> RawEventStatusEnum
+
+AccountingEventFactory -- AccountingEvent : constructs >
+AccountingEventFactory -- RawEvent : consumes >
 
 @enduml
